@@ -472,6 +472,14 @@ textarea {
   color: #5c695e;
 }
 
+.sourceLine {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #f8f1e5;
+  font-size: 13px;
+  font-weight: 700;
+}
+
 ul {
   display: grid;
   gap: 7px;

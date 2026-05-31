@@ -202,7 +202,8 @@ function findExerciseName(line) {
 
 function inferExerciseTitle(line) {
   const cleaned = line
-    .replace(/\b\d+\s*(?:x|sets?|reps?|sec|secs|seconds|min|mins|minutes)\b/gi, "")
+    .replace(/\b\d+\s*(?:x|sets?|reps?|repetitions?|sec|secs|seconds|min|mins|minutes|rounds?)\b/gi, "")
+    .replace(/\b\d+\s*[-–—]\s*\d+\b/g, "")
     .replace(/\brest\b.*$/i, "")
     .replace(/[-:•|]/g, " ")
     .replace(/\s+/g, " ")
@@ -225,12 +226,14 @@ function genericExercise(title) {
 }
 
 function parseDetails(line) {
-  const setsReps = line.match(/(\d+)\s*(?:x|sets?\s*(?:of)?|sets?\s*x)\s*(\d+\s*(?:-\s*\d+)?)/i);
+  const setsReps = line.match(/(\d+)\s*(?:x|×|sets?\s*(?:of)?|sets?\s*x|rounds?\s*(?:of)?)\s*(\d+\s*(?:[-–—]\s*\d+)?)/i);
+  const repsOnly = line.match(/(\d+\s*(?:[-–—]\s*\d+)?)\s*(?:reps?|repetitions?)\b/i);
+  const setsOnly = line.match(/(\d+)\s*(?:sets?|rounds?)\b/i);
   const duration = line.match(/(\d+)\s*(sec|secs|seconds|min|mins|minutes)/i);
   const rest = line.match(/rest\s*(\d+)\s*(sec|secs|seconds|min|mins|minutes)/i);
   return {
-    sets: setsReps ? Number(setsReps[1]) : duration ? 3 : 3,
-    reps: setsReps ? setsReps[2].replace(/\s/g, "") : duration ? `${duration[1]} ${duration[2]}` : "8-12",
+    sets: setsReps ? Number(setsReps[1]) : setsOnly ? Number(setsOnly[1]) : duration ? 3 : 3,
+    reps: setsReps ? setsReps[2].replace(/\s/g, "") : repsOnly ? repsOnly[1].replace(/\s/g, "") : duration ? `${duration[1]} ${duration[2]}` : "8-12",
     rest: rest ? toSeconds(rest[1], rest[2]) : 75,
   };
 }
@@ -241,9 +244,14 @@ function toSeconds(value, unit) {
 }
 
 function buildWorkout(text, goal, options = {}) {
-  const lines = text.split(/\n|;/).map((line) => line.trim()).filter(Boolean);
+  const lines = normalizeWorkoutText(text);
   const found = [];
-  for (const line of lines) {
+  for (let index = 0; index < lines.length; index += 1) {
+    let line = lines[index];
+    if (looksLikeNameOnly(line) && lines[index + 1] && looksLikeDetailsOnly(lines[index + 1])) {
+      line = `${line} ${lines[index + 1]}`;
+      index += 1;
+    }
     const key = findExerciseName(line);
     const inferredTitle = key ? "" : inferExerciseTitle(line);
     if (!key && !inferredTitle) continue;
@@ -270,6 +278,35 @@ function buildWorkout(text, goal, options = {}) {
   });
 
   return goal === "quick" ? ordered.slice(0, 5) : ordered;
+}
+
+function normalizeWorkoutText(text) {
+  return text
+    .replace(/[|]/g, "\n")
+    .replace(/[•]/g, "\n")
+    .split(/\n|;/)
+    .map((line) => line.replace(/\s+/g, " ").trim())
+    .filter(Boolean)
+    .filter((line) => !/^(week|day|workout|phase|warm\s?up|cool\s?down)$/i.test(line))
+    .flatMap(splitMultiExerciseLine);
+}
+
+function splitMultiExerciseLine(line) {
+  const knownTitles = Object.values(EXERCISES).map((exercise) => exercise.title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  const pattern = new RegExp(`\\s+(?=(${knownTitles.join("|")})\\b)`, "i");
+  return line.split(pattern).map((part) => part.trim()).filter(Boolean);
+}
+
+function hasTrainingDetails(line) {
+  return /(\d+\s*(?:x|×|sets?|rounds?|reps?|repetitions?|sec|secs|seconds|min|mins|minutes))|(?:rest\s*\d+)/i.test(line);
+}
+
+function looksLikeNameOnly(line) {
+  return /[a-z]/i.test(line) && !hasTrainingDetails(line) && line.length <= 60;
+}
+
+function looksLikeDetailsOnly(line) {
+  return hasTrainingDetails(line) && !findExerciseName(line) && inferExerciseTitle(line).split(" ").length <= 2;
 }
 
 function Diagram({ type, large = false }) {
@@ -901,6 +938,7 @@ function App() {
                     <span>{exercise.sets} sets x {exercise.reps}</span>
                   </div>
                   <p>{exercise.muscles} • {exercise.equipment} • Rest {exercise.rest}s</p>
+                  <p className="sourceLine">Parsed from: {exercise.source}</p>
                   <ul>
                     {exercise.cues.map((cue) => <li key={cue}><CheckCircle2 size={16} />{cue}</li>)}
                   </ul>
