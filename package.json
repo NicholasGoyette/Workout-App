@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "start": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "build:supabase": "vite build --base=/functions/v1/gym-plan-helper/",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.106.2",
+    "@vitejs/plugin-react": "latest",
+    "lucide-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "tesseract.js": "^7.0.0",
+    "vite": "latest"
+  }
+}

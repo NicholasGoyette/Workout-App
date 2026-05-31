@@ -1,0 +1,919 @@
+:root {
+  color: #17211b;
+  background: #f7f4ed;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+textarea,
+input {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+}
+
+button:disabled,
+textarea:disabled,
+input:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+main {
+  min-height: 100vh;
+  padding: 18px;
+}
+
+.topbar,
+.hero,
+.calendarPanel,
+.workspace,
+.tipsPanel,
+.history {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0 18px;
+}
+
+.brand,
+.eyebrow,
+.sessionPanel div,
+.uploadRow,
+.exerciseTitle,
+.sectionHeader,
+.note,
+.historyItem,
+.topActions {
+  display: flex;
+  align-items: center;
+}
+
+.brand {
+  gap: 10px;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.ghost,
+.uploadRow button,
+.gymStart {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  padding: 11px 14px;
+  background: #1d3327;
+  color: white;
+  font-weight: 700;
+}
+
+.ghost {
+  background: #e5dfd1;
+  color: #1d3327;
+}
+
+.topActions {
+  gap: 10px;
+}
+
+.gymStart {
+  background: #d94f30;
+  color: white;
+}
+
+.hero {
+  min-height: 320px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 28px;
+  align-items: center;
+  padding: 34px 0 24px;
+}
+
+.eyebrow {
+  gap: 8px;
+  color: #58705f;
+  margin: 0 0 10px;
+  font-weight: 800;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  max-width: 760px;
+  margin-bottom: 16px;
+  font-size: clamp(38px, 6vw, 72px);
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.subhead {
+  max-width: 720px;
+  color: #526155;
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.sessionPanel {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  background: #26382d;
+  color: white;
+  border-radius: 8px;
+}
+
+.sessionPanel div {
+  justify-content: space-between;
+  min-height: 62px;
+  padding: 0 14px;
+  border-radius: 8px;
+  background: #334c3c;
+  font-weight: 800;
+}
+
+.calendarPanel,
+.tipsPanel {
+  margin-bottom: 22px;
+  padding: 18px;
+  border: 1px solid #e0d8c8;
+  background: #fffcf5;
+  border-radius: 8px;
+}
+
+.calendarToolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.calendarToolbar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #1d3327;
+  color: white;
+  font-weight: 800;
+}
+
+.calendarGrid {
+  display: grid;
+  gap: 14px;
+}
+
+.calendarWeek {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr);
+  gap: 10px;
+  align-items: stretch;
+}
+
+.weekLabel {
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #e9ddc7;
+  color: #243a2c;
+  font-weight: 900;
+}
+
+.dayTiles {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(92px, 1fr));
+  gap: 8px;
+}
+
+.dayTile {
+  min-height: 92px;
+  padding: 10px;
+  border: 1px solid #e5ddce;
+  border-radius: 8px;
+  background: white;
+  color: #17211b;
+  text-align: left;
+}
+
+.dayTile.active {
+  border-color: #d94f30;
+  box-shadow: inset 0 0 0 2px #d94f30;
+}
+
+.dayTile span,
+.dayTile strong,
+.dayTile small {
+  display: block;
+}
+
+.dayTile span {
+  color: #d94f30;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.dayTile strong {
+  margin: 6px 0;
+  font-size: 15px;
+}
+
+.dayTile small {
+  color: #5e6c62;
+  font-weight: 800;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: 370px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.inputPane,
+.planPane {
+  border: 1px solid #e0d8c8;
+  background: #fffcf5;
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.inputPane {
+  position: sticky;
+  top: 18px;
+}
+
+.label {
+  display: block;
+  margin: 4px 0 8px;
+  font-weight: 800;
+}
+
+.segments {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.segments button {
+  min-height: 42px;
+  border-radius: 8px;
+  background: #ece5d7;
+  color: #243a2c;
+  font-weight: 800;
+}
+
+.segments button.active {
+  background: #1d3327;
+  color: white;
+}
+
+textarea {
+  width: 100%;
+  min-height: 230px;
+  resize: vertical;
+  border: 1px solid #d5cbb9;
+  border-radius: 8px;
+  padding: 12px;
+  line-height: 1.45;
+  color: #17211b;
+  background: white;
+}
+
+.dayTitleInput {
+  width: 100%;
+  min-height: 44px;
+  margin-bottom: 14px;
+  border: 1px solid #d5cbb9;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #17211b;
+  background: white;
+  font-weight: 800;
+}
+
+.programDays {
+  display: grid;
+  gap: 8px;
+  max-height: 260px;
+  overflow: auto;
+  margin-bottom: 18px;
+  padding-right: 4px;
+}
+
+.programDays button {
+  display: grid;
+  gap: 4px;
+  min-height: 58px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #ece5d7;
+  color: #243a2c;
+  text-align: left;
+}
+
+.programDays button.active {
+  background: #1d3327;
+  color: white;
+}
+
+.programDays span {
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.programDays small {
+  overflow: hidden;
+  color: inherit;
+  opacity: 0.75;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dangerButton {
+  width: 100%;
+  min-height: 42px;
+  margin: -6px 0 18px;
+  border-radius: 8px;
+  background: #8f2c22;
+  color: white;
+  font-weight: 900;
+}
+
+.emptyState {
+  padding: 16px;
+  border: 1px dashed #cbbfae;
+  border-radius: 8px;
+  background: #f8f1e5;
+  color: #5e6c62;
+  font-weight: 800;
+}
+
+.uploadRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.uploadRow button {
+  justify-content: center;
+}
+
+.preview {
+  width: 100%;
+  max-height: 280px;
+  object-fit: contain;
+  margin-top: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd3c0;
+  background: white;
+}
+
+.note {
+  gap: 10px;
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #edf4ed;
+  color: #385744;
+  line-height: 1.35;
+}
+
+.sectionHeader {
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.sectionHeader h2 {
+  margin-bottom: 0;
+  font-size: 24px;
+}
+
+.sectionHeader span {
+  color: #5e6c62;
+  font-weight: 800;
+}
+
+.exerciseList {
+  display: grid;
+  gap: 12px;
+}
+
+.exerciseCard {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 160px;
+  gap: 16px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid #e5ddce;
+  border-radius: 8px;
+  background: white;
+}
+
+.order {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #d94f30;
+  color: white;
+  font-weight: 900;
+}
+
+.exerciseTitle {
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.exerciseTitle h3 {
+  margin-bottom: 0;
+  font-size: 20px;
+}
+
+.exerciseTitle span {
+  padding: 6px 9px;
+  border-radius: 8px;
+  background: #f2eadb;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.exerciseMain p {
+  margin: 7px 0 10px;
+  color: #5c695e;
+}
+
+ul {
+  display: grid;
+  gap: 7px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: #26382d;
+}
+
+li svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: #3e7a4b;
+}
+
+.diagram,
+.exerciseMedia {
+  width: 170px;
+  height: 124px;
+  border-radius: 8px;
+}
+
+.diagram {
+  color: #243a2c;
+}
+
+.exerciseMedia {
+  display: grid;
+  place-items: center;
+  margin: 0;
+  overflow: hidden;
+  background: #f4efe5;
+}
+
+.exerciseMedia img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: white;
+}
+
+.exerciseMedia figcaption {
+  width: 100%;
+  padding: 4px 6px;
+  background: #20362b;
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.diagram text {
+  fill: #7b412d;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.diagramLarge,
+.exerciseMediaLarge {
+  width: min(100%, 520px);
+  height: auto;
+}
+
+.exerciseMediaLarge {
+  aspect-ratio: 4 / 3;
+}
+
+.tipsHeading {
+  margin-top: 18px;
+}
+
+.tipsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 12px;
+}
+
+.tipCard {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #e5ddce;
+  border-radius: 8px;
+  background: white;
+  color: #17211b;
+}
+
+.tipCard video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  background: #17211b;
+}
+
+.tipCard h3 {
+  margin-bottom: 6px;
+  font-size: 18px;
+}
+
+.tipCard p {
+  margin-bottom: 0;
+  color: #5c695e;
+}
+
+.tipCard input,
+.tipCard textarea {
+  width: 100%;
+  border: 1px solid #d5cbb9;
+  border-radius: 8px;
+  padding: 9px 10px;
+}
+
+.tipCard textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+
+.history {
+  padding: 22px 0 8px;
+}
+
+.historyGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.historyItem {
+  gap: 8px;
+  justify-content: flex-start;
+  min-height: 62px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fffcf5;
+  color: #17211b;
+  border: 1px solid #e0d8c8;
+}
+
+.historyItem span,
+.historyItem small {
+  color: #687268;
+}
+
+.gymMode {
+  min-height: 100vh;
+  padding: 16px;
+  background: #14251d;
+  color: white;
+}
+
+.gymShell,
+.gymDone {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.gymShell {
+  display: grid;
+  gap: 18px;
+}
+
+.gymTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gymQuiet,
+.gymSecondary,
+.gymPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 62px;
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-weight: 900;
+}
+
+.gymQuiet {
+  min-height: 46px;
+  background: #2d4438;
+  color: white;
+}
+
+.currentExercise {
+  padding: 22px;
+  border-radius: 8px;
+  background: #20362b;
+}
+
+.currentExercise span,
+.gymStats span {
+  display: block;
+  color: #b7cbbd;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.currentExercise h1 {
+  margin-bottom: 8px;
+  font-size: clamp(42px, 9vw, 86px);
+}
+
+.currentExercise p {
+  margin-bottom: 0;
+  color: #d8e5dc;
+  font-size: 20px;
+}
+
+.gymStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.gymStats div,
+.gymHelp,
+.gymDiagram,
+.validationBanner {
+  border-radius: 8px;
+  background: #fffcf5;
+  color: #17211b;
+}
+
+.gymStats div {
+  min-height: 112px;
+  padding: 16px;
+}
+
+.gymStats strong {
+  font-size: clamp(28px, 6vw, 52px);
+}
+
+.validationBanner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border-left: 6px solid #d94f30;
+}
+
+.validationBanner svg {
+  flex: 0 0 auto;
+  color: #3e7a4b;
+}
+
+.validationBanner strong,
+.validationBanner span,
+.validationKicker {
+  display: block;
+}
+
+.validationBanner strong {
+  margin-bottom: 4px;
+  font-size: 20px;
+}
+
+.validationBanner span {
+  color: #607065;
+  font-weight: 800;
+}
+
+.gymDiagram {
+  display: grid;
+  place-items: center;
+  min-height: 260px;
+  padding: 18px;
+}
+
+.gymHelp {
+  padding: 18px;
+}
+
+.gymHelp h2 {
+  margin-bottom: 12px;
+}
+
+.gymHelp li {
+  color: #17211b;
+  font-size: 19px;
+}
+
+.gymActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.gymSecondary {
+  background: #e9ddc7;
+  color: #17211b;
+}
+
+.gymPrimary {
+  grid-column: 1 / -1;
+  min-height: 82px;
+  background: #d94f30;
+  color: white;
+  font-size: 26px;
+}
+
+.gymDone {
+  min-height: calc(100vh - 32px);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.gymDone p {
+  max-width: 520px;
+  color: #d8e5dc;
+  font-size: 20px;
+}
+
+.validationKicker {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #d94f30;
+  color: white;
+  font-weight: 900;
+}
+
+@media (max-width: 880px) {
+  main {
+    padding: 14px;
+  }
+
+  .hero,
+  .calendarWeek,
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-top: 18px;
+  }
+
+  .inputPane {
+    position: static;
+  }
+
+  .dayTiles {
+    grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+  }
+
+  .weekLabel {
+    min-height: 42px;
+  }
+
+  .exerciseCard {
+    grid-template-columns: 40px minmax(0, 1fr);
+  }
+
+  .diagram {
+    grid-column: 2;
+    width: 100%;
+    max-width: 230px;
+  }
+
+  .exerciseMedia {
+    grid-column: 2;
+    width: 100%;
+    max-width: 230px;
+  }
+
+  .gymStats {
+    grid-template-columns: 1fr;
+  }
+
+  .gymActions {
+    grid-template-columns: 1fr;
+  }
+
+  .gymPrimary {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 540px) {
+  .topbar {
+    align-items: flex-start;
+    gap: 12px;
+    flex-direction: column;
+  }
+
+  .topActions {
+    width: 100%;
+  }
+
+  .topActions button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .brand {
+    font-size: 18px;
+  }
+
+  .segments {
+    grid-template-columns: 1fr;
+  }
+
+  .calendarToolbar,
+  .exerciseTitle {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .uploadRow {
+    grid-template-columns: 1fr;
+  }
+
+  .exerciseTitle span {
+    width: fit-content;
+  }
+
+  .gymMode {
+    padding: 10px;
+  }
+
+  .currentExercise,
+  .gymStats div,
+  .gymHelp,
+  .gymDiagram,
+  .validationBanner {
+    padding: 14px;
+  }
+
+  .gymQuiet,
+  .gymSecondary,
+  .gymPrimary {
+    width: 100%;
+  }
+}
